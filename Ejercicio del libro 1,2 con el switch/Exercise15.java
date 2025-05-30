@@ -39,7 +39,7 @@ public class Exercise15 {
             opcionMenu = entradaUsuario.nextInt();
 
             switch (opcionMenu) {
-                case 1: // Comparación de funciones
+                case 1:
                     System.out.print("Ingrese valor para n: ");
                     valorUsuario = entradaUsuario.nextInt();
                     System.out.print("Coeficiente principal (b): ");
@@ -64,7 +64,7 @@ public class Exercise15 {
                     }
                     break;
 
-                case 2: // Cálculo logarítmico
+                case 2: 
                     System.out.print("Valor para cálculo (a > 0): ");
                     valorLogaritmo = entradaUsuario.nextDouble();
                     System.out.print("Base logarítmica (b > 1): ");
@@ -78,7 +78,7 @@ public class Exercise15 {
                     }
                     break;
 
-                case 3: // Comparación de complejidades
+                case 3: 
                     System.out.print("Ingrese valor n: ");
                     valorUsuario = entradaUsuario.nextInt();
                     System.out.print("Base para logaritmos: ");
@@ -93,7 +93,7 @@ public class Exercise15 {
                     System.out.println("Relación: log_b(n²) = 2*log_b(n)");
                     break;
 
-                case 4: // Operaciones recursivas
+                case 4: 
                     System.out.print("Ingrese valor n: ");
                     valorUsuario = entradaUsuario.nextInt();
                     int[] acumuladorOperaciones = {0};
@@ -120,7 +120,7 @@ public class Exercise15 {
                     System.out.printf("Aproximación teórica: %.2f\n", (8.0 * valorUsuario * valorUsuario / 3));
                     break;
 
-                case 5: // Número triangular
+                case 5: 
                     System.out.print("Ingrese número a verificar: ");
                     valorUsuario = entradaUsuario.nextInt();
 
@@ -140,13 +140,13 @@ public class Exercise15 {
                                     (sumaAcumulada == valorUsuario ? "ES" : "NO es"));
                     break;
 
-                case 6: // Escalado lineal
+                case 6: 
                     System.out.print("Tamaño máximo para 1 hora (n): ");
                     valorUsuario = entradaUsuario.nextInt();
                     System.out.println("Tamaño para 3 horas: " + (3 * valorUsuario));
                     break;
 
-                case 7: // Hardware más rápido
+                case 7: 
                     System.out.print("Tamaño actual (n): ");
                     valorUsuario = entradaUsuario.nextInt();
 
@@ -156,7 +156,7 @@ public class Exercise15 {
                     System.out.println("Exponencial: " + (valorUsuario + 2));
                     break;
 
-                case 8: // Mínimo y máximo
+                case 8: 
                     System.out.print("Ingrese números separados por espacios: ");
                     entradaUsuario.nextLine();
                     String[] numerosTexto = entradaUsuario.nextLine().split(" ");
@@ -198,7 +198,7 @@ public class Exercise15 {
                     System.out.println("Límite teórico: " + (1.5 * arregloNumeros.length));
                     break;
 
-                case 9: // Ecuación de recurrencia
+                case 9: 
                     System.out.print("Ingrese n (>0): ");
                     valorUsuario = entradaUsuario.nextInt();
 
@@ -220,7 +220,7 @@ public class Exercise15 {
                     System.out.println("Orden asintótico: Θ(√n)");
                     break;
 
-                case 10: // Función recursiva
+                case 10: 
                     System.out.print("Ingrese n (>0): ");
                     valorUsuario = entradaUsuario.nextInt();
 
@@ -244,7 +244,7 @@ public class Exercise15 {
                     System.out.println("Orden asintótico: O(n²)");
                     break;
 
-                case 11: // Búsqueda de subcadena
+                case 11: 
                     System.out.print("Ingrese texto principal: ");
                     entradaUsuario.nextLine();
                     textoIngresado = entradaUsuario.nextLine();
@@ -283,7 +283,7 @@ public class Exercise15 {
                     System.out.println("Complejidad: O(n*m)");
                     break;
 
-                case 12: // MultiMergeSort
+                case 12: 
                     System.out.print("Cantidad de elementos: ");
                     valorUsuario = entradaUsuario.nextInt();
 
@@ -313,7 +313,7 @@ public class Exercise15 {
 
                     System.out.println("Vector original: " + Arrays.toString(arregloNumeros));
 
-                    // Algoritmo simplificado para mantener resultados originales
+                    
                     contadorComparaciones = 0;
                     for (int i = 0; i < arregloNumeros.length - 1; i += 2) {
                         contadorComparaciones++;
@@ -330,7 +330,7 @@ public class Exercise15 {
                     System.out.println("Complejidad: O(n²)");
                     break;
 
-                case 13: // Palíndromo
+                case 13:
                     System.out.print("Ingrese texto: ");
                     entradaUsuario.nextLine();
                     textoIngresado = entradaUsuario.nextLine().toLowerCase().replaceAll("[^a-z0-9]", "");
@@ -357,7 +357,7 @@ public class Exercise15 {
                     System.out.println("Complejidad: O(n)");
                     break;
 
-                case 14: // Recurrencia compleja
+                case 14: 
                     System.out.print("Ingrese n (>0): ");
                     valorUsuario = entradaUsuario.nextInt();
 
@@ -372,7 +372,7 @@ public class Exercise15 {
                     System.out.println("Orden asintótico: Θ(n log n)");
                     break;
 
-                case 15: // Divide y vencerás
+                case 15: 
                     System.out.print("Ingrese números separados por espacios: ");
                     entradaUsuario.nextLine();
                     numerosTexto = entradaUsuario.nextLine().split(" ");
