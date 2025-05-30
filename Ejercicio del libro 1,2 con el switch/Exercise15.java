@@ -1,324 +1,428 @@
-import java.text.DecimalFormat; 
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class Exercise15 {
-
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        DecimalFormat df = new DecimalFormat("#,###.####");
+        Scanner entradaUsuario = new Scanner(System.in);
+        int opcionMenu, valorUsuario, coeficienteFuncion, terminoIndependiente, contadorPasos;
+        int sumaAcumulada, valorMinimo, valorMaximo, contadorComparaciones, posicionSubcadena;
+        double valorLogaritmo, baseLogaritmo, resultadoCalculo;
+        int[] arregloNumeros;
+        String textoIngresado, subcadenaBuscada;
+        boolean banderaEncontrado;
 
-        int opcion;
-
-        // Variables generales declaradas al inicio
-        int n = 0, m = 0;
-        long comparaciones = 0;
-        long operacionesTrivial = 0;
-        long operacionesDivideYVenceras = 0;
-        int tiempoOriginal = 0, nuevoTiempo = 0, tamanioOriginal = 0;
-        double entradaLineal = 0, entradaCuadratica = 0, entradaExponencial = 0;
-        boolean encontrado;
+       
+       System.out.println("Bienvenido al programa de ejercicios de análisis de algoritmos.");
+        
 
         do {
             System.out.println("Seleccione el número de la pregunta que desea resolver:");
-            System.out.println("1. Orden de f(n) - g(n)");
-            System.out.println("2. Demostración de logaritmos");
-            System.out.println("3. Justificación de afirmaciones");
-            System.out.println("4. Procedimiento G(n) - Complejidad");
-            System.out.println("5. Números Triangulares");
-            System.out.println("6. Mayor tamaño de entrada con tiempo limitado");
-            System.out.println("7. Máquina más rápida con tiempo limitado");
-            System.out.println("8. Algoritmo máximo y mínimo - Comparaciones");
-            System.out.println("9. Ecuación de recurrencia");
-            System.out.println("10. Análisis de funciones recursivas");
-            System.out.println("11. Algoritmo StringSearch - Comparaciones");
-            System.out.println("12. Ordenamiento por Mergesort");
-            System.out.println("13. Algoritmo de Palíndromo");
-            System.out.println("14. Comparación de algoritmos Divide y Vencerás vs Trivial");
-            System.out.println("15. Algoritmo MAX_MIN - Comparaciones");
+            System.out.println("1. Diferencia de f(n) y g(n)");
+            System.out.println("2. log(a) / log(b)");
+            System.out.println("3. Comparador de funciones");
+            System.out.println("4. Calcular el orden exacto de t(n)");
+            System.out.println("5. Verificar número triangular");
+            System.out.println("6. Escalado lineal para 3 horas");
+            System.out.println("7. Programa 100 veces más rápido");
+            System.out.println("8. Encontrar min/max en vector");
+            System.out.println("9. Resolver recurrencia T(n) = 2T(n/4) + lg n");
+            System.out.println("10. Resolver total(n) = total(n-1) + 2*parcial(n-1)");
+            System.out.println("11. Búsqueda de subcadena");
+            System.out.println("12. MultiMergeSort");
+            System.out.println("13. Verificar palíndromo");
+            System.out.println("14. Calcular T(n) = 2T(n/2) + 2n*log2(n)");
+            System.out.println("15. Encontrar max/min con divide y conquista");
             System.out.println("0. Salir");
-            System.out.print("Opción: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine(); // limpiar buffer
+            System.out.print("Seleccione una opción: ");
 
-            switch (opcion) {
-                case 1:
-                    System.out.print("Ingrese n: ");
-                    n = scanner.nextInt();
+            
+            opcionMenu = entradaUsuario.nextInt();
 
-                    int h = n * n;
+            switch (opcionMenu) {
+                case 1: // Comparación de funciones
+                    System.out.print("Ingrese valor para n: ");
+                    valorUsuario = entradaUsuario.nextInt();
+                    System.out.print("Coeficiente principal (b): ");
+                    coeficienteFuncion = entradaUsuario.nextInt();
+                    System.out.print("Término independiente (c): ");
+                    terminoIndependiente = entradaUsuario.nextInt();
 
-                    int f1 = h + 3;
-                    int g1 = h;
-                    int diferencia1 = f1 - g1;
+                    sumaAcumulada = coeficienteFuncion * valorUsuario + terminoIndependiente;
+                    int diferenciaFunciones = sumaAcumulada - valorUsuario;
 
-                    int f2 = 2 * h;
-                    int g2 = h;
-                    int diferencia2 = f2 - g2;
+                    System.out.println("\nResultados:");
+                    System.out.printf("f(n) = %d*n + %d = %d\n", coeficienteFuncion, terminoIndependiente, sumaAcumulada);
+                    System.out.printf("g(n) = n = %d\n", valorUsuario);
+                    System.out.printf("Diferencia: %d\n", diferenciaFunciones);
 
-                    System.out.println("Caso 1: Diferencia constante");
-                    System.out.println("f(n) = n^2 + 3 = " + f1);
-                    System.out.println("g(n) = n^2     = " + g1);
-                    System.out.println("f(n) - g(n)    = " + diferencia1);
-
-                    System.out.println("Caso 2: Diferencia proporcional");
-                    System.out.println("f(n) = 2n^2 = " + f2);
-                    System.out.println("g(n) = n^2  = " + g2);
-                    System.out.println("f(n) - g(n) = " + diferencia2);
-                    break;
-
-                case 2:
-                    System.out.print("Ingrese la cantidad para logaritmos: ");
-                    n = scanner.nextInt();
-
-                    for (int i = 2; i <= n; i *= 2) {
-                        double log_a = Math.log(i) / Math.log(2);
-                        double log_b = Math.log(i) / Math.log(4);
-                        double powLog2 = Math.pow(2, log_a);
-                        double powLog4 = Math.pow(2, log_b);
-
-                        System.out.printf("n=%d, log2(n)=%.2f, log4(n)=%.2f, 2^log2=%.2f, 2^log4=%.2f\n",
-                                i, log_a, log_b, powLog2, powLog4);
-                    }
-                    break;
-
-                case 3:
-                    System.out.print("Ingrese la cantidad para justificación: ");
-                    n = scanner.nextInt();
-
-                    for (int i = 0; i <= n; i++) {
-                        double f = Math.pow(2, i);
-                        double h3 = Math.pow(3, i);
-
-                        if (f > h3) {
-                            System.out.println("Es falso para n = " + i);
-                        } else {
-                            System.out.println("Es verdadero para n = " + i);
-                            System.out.println("f(n) = " + f + ", h(n) = " + h3);
-                        }
-                    }
-                    break;
-
-                case 4:
-                    System.out.print("Ingrese x para procedimiento G(n): ");
-                    n = scanner.nextInt();
-                    int suma = 0;
-                    for (int i = 1; i <= n; i++) {
-                        suma += i;
-                    }
-                    System.out.println("G(n) = " + suma);
-                    break;
-
-                case 5:
-                    System.out.print("Ingrese un número para verificar si es triangular: ");
-                    n = scanner.nextInt();
-
-                    int sumaTri = 0;
-                    int i = 1;
-                    while (sumaTri < n) {
-                        sumaTri += i;
-                        i++;
-                    }
-
-                    if (sumaTri == n) {
-                        System.out.println(n + " es un número triangular.");
+                    if (diferenciaFunciones == 5) {
+                        System.out.println("Diferencia constante - O(n)");
+                    } else if (diferenciaFunciones == valorUsuario || diferenciaFunciones == coeficienteFuncion * valorUsuario) {
+                        System.out.println("Diferencia proporcional - Θ(n)");
                     } else {
-                        System.out.println(n + " no es un número triangular.");
+                        System.out.println("Comportamiento especial - Analizar caso");
                     }
                     break;
 
-                case 6:
-                    tiempoOriginal = 1;
-                    nuevoTiempo = 3 * 60 * 60;
-                    tamanioOriginal = 1000000;
+                case 2: // Cálculo logarítmico
+                    System.out.print("Valor para cálculo (a > 0): ");
+                    valorLogaritmo = entradaUsuario.nextDouble();
+                    System.out.print("Base logarítmica (b > 1): ");
+                    baseLogaritmo = entradaUsuario.nextDouble();
 
-                    entradaLineal = (double) tamanioOriginal * nuevoTiempo / tiempoOriginal;
-                    entradaCuadratica = Math.sqrt(entradaLineal);
-                    entradaExponencial = Math.log10((double) nuevoTiempo / tiempoOriginal) + Math.log10(tamanioOriginal);
-
-                    System.out.printf("Lineal: %.0f\n", entradaLineal);
-                    System.out.printf("Cuadrática: %.0f\n", entradaCuadratica);
-                    System.out.printf("Exponencial: %.2f\n", entradaExponencial);
-                    break;
-
-                case 7:
-                    System.out.print("Ingrese tamaño de entrada n: ");
-                    n = scanner.nextInt();
-                    System.out.print("Ingrese factor de mejora de la nueva máquina: ");
-                    int nueva_maquina = scanner.nextInt();
-
-                    int k1 = nueva_maquina * n;
-                    int k2 = nueva_maquina * 2 * n;
-                    int k3 = nueva_maquina * 10 * n;
-
-                    System.out.println("1. Máquina nueva: " + k1);
-                    System.out.println("2. Máquina nueva: " + k2);
-                    System.out.println("3. Máquina nueva: " + k3);
-                    break;
-
-                case 8:
-                    System.out.print("Ingrese la cantidad de números: ");
-                    n = scanner.nextInt();
-
-                    int mayor = Integer.MIN_VALUE;
-                    int menor = Integer.MAX_VALUE;
-                    int num;
-
-                    for (int j = 1; j <= n; j++) {
-                        System.out.print("Ingrese número " + j + ": ");
-                        num = scanner.nextInt();
-
-                        if (num > mayor) mayor = num;
-                        if (num < menor) menor = num;
-                    }
-                    System.out.println("El número mayor es: " + mayor);
-                    System.out.println("El número menor es: " + menor);
-                    break;
-
-                case 9:
-                    System.out.print("Ingrese n > 1 para ecuación de recurrencia: ");
-                    n = scanner.nextInt();
-
-                    if (n <= 1) {
-                        System.out.println("n debe ser mayor que 1.");
+                    if (valorLogaritmo > 0 && baseLogaritmo > 1) {
+                        resultadoCalculo = Math.log(valorLogaritmo) / Math.log(baseLogaritmo);
+                        System.out.printf("log_%.0f(%.0f) = %.4f%n", baseLogaritmo, valorLogaritmo, resultadoCalculo);
                     } else {
-                        long T = n;
-                        for (int it = 1; it <= 5; it++) {
-                            long resultado = 2 * T + (long) (Math.log(T) / Math.log(2));
-                            System.out.printf("Iteración %d: T(n) = %d, Resultado = %d\n", it, T, resultado);
-                            T /= 4;
-                            if (T == 0 && it < 5) T = 1;
-                        }
-                        System.out.println("Orden estimado: Θ(n)");
+                        System.out.println("Error: Valores no válidos");
                     }
                     break;
 
-                case 10:
-                    System.out.println("Ejercicio 10: Funciones total y parcial");
-                    System.out.print("Introduce n: ");
-                    n = scanner.nextInt();
+                case 3: // Comparación de complejidades
+                    System.out.print("Ingrese valor n: ");
+                    valorUsuario = entradaUsuario.nextInt();
+                    System.out.print("Base para logaritmos: ");
+                    baseLogaritmo = entradaUsuario.nextDouble();
 
-                    int resultadoTotal = 0;
-                    for (int x = 1; x <= n; x++) {
-                        resultadoTotal += x;
-                    }
-                    System.out.println("Resultado total(n): " + resultadoTotal);
-
-                    System.out.print("Introduce m para total(n,m): ");
-                    m = scanner.nextInt();
-                    int resultadoTotalNM = 0;
-                    for (int x = n; x <= m; x++) {
-                        resultadoTotalNM += x;
-                    }
-                    System.out.println("Resultado total(n,m): " + resultadoTotalNM);
+                    double logaritmoN = Math.log(valorUsuario) / Math.log(baseLogaritmo);
+                    System.out.println("\nComparación:");
+                    System.out.println("O(n): " + valorUsuario);
+                    System.out.println("O(n²): " + (valorUsuario * valorUsuario));
+                    System.out.printf("O(log n): %.2f\n", logaritmoN);
+                    System.out.printf("O(log n²): %.2f\n", 2 * logaritmoN);
+                    System.out.println("Relación: log_b(n²) = 2*log_b(n)");
                     break;
 
-                case 11:
-                    System.out.println("Ejercicio 11: Buscar primera aparición de un string");
+                case 4: // Operaciones recursivas
+                    System.out.print("Ingrese valor n: ");
+                    valorUsuario = entradaUsuario.nextInt();
+                    int[] acumuladorOperaciones = {0};
 
-                    System.out.print("Introduce cadena A: ");
-                    String A = scanner.nextLine();
-                    System.out.print("Introduce cadena B: ");
-                    String B = scanner.nextLine();
+                    class ContadorRecursivo {
+                        int contar(int x) {
+                            for (int i = 1; i <= x; i++) {
+                                for (int j = 1; j <= i; j++) {
+                                    acumuladorOperaciones[0]++;
+                                }
+                            }
 
-                    encontrado = false;
-                    int comienzo = -1;
-                    int N = A.length();
-                    int M = B.length();
-                    int limite = N - M + 1;
-                    int com = 0;
-                    int j;
-
-                    while (!encontrado && com < limite) {
-                        int i2 = com;
-                        j = 0;
-                        while (j < M && A.charAt(i2) == B.charAt(j)) {
-                            i2++;
-                            j++;
-                        }
-                        encontrado = (j == M);
-                        if (!encontrado) {
-                            com++;
+                            if (x > 1) {
+                                for (int contadorPasos = 0; contadorPasos < 4; contadorPasos++) {
+                                    acumuladorOperaciones[0] += contar(x / 2);
+                                }
+                            }
+                            return acumuladorOperaciones[0];
                         }
                     }
-                    comienzo = encontrado ? com : -1;
 
-                    System.out.println("¿Encontrado?: " + encontrado);
-                    System.out.println("Comienzo: " + comienzo);
+                    int totalOperaciones = new ContadorRecursivo().contar(valorUsuario);
+                    System.out.println("Operaciones totales: " + totalOperaciones);
+                    System.out.printf("Aproximación teórica: %.2f\n", (8.0 * valorUsuario * valorUsuario / 3));
                     break;
 
-                case 12:
-                    System.out.println("Ejercicio 12: Complejidad de mergesort generalizado");
-                    System.out.println("T(n) = 2*T(n/2) + O(n log n)"); 
-                    System.out.println("Aquí dividir el vector en n/2 trozos de tamaño 2 y hacer merge n/2 secuencias.");
-                    System.out.println("Complejidad total: O(n log n) (análisis detallado omiso en código)");
+                case 5: // Número triangular
+                    System.out.print("Ingrese número a verificar: ");
+                    valorUsuario = entradaUsuario.nextInt();
+
+                    if (valorUsuario < 1) {
+                        System.out.println("El número debe ser ≥1");
+                        break;
+                    }
+
+                    sumaAcumulada = 0;
+                    contadorPasos = 1;
+                    while (sumaAcumulada < valorUsuario) {
+                        sumaAcumulada += contadorPasos++;
+                    }
+
+                    System.out.printf("%d %s número triangular\n", 
+                                    valorUsuario, 
+                                    (sumaAcumulada == valorUsuario ? "ES" : "NO es"));
                     break;
 
-                case 13:
-                    System.out.println("Ejercicio 13: Comprobar si cadena es palíndromo");
+                case 6: // Escalado lineal
+                    System.out.print("Tamaño máximo para 1 hora (n): ");
+                    valorUsuario = entradaUsuario.nextInt();
+                    System.out.println("Tamaño para 3 horas: " + (3 * valorUsuario));
+                    break;
 
-                    System.out.print("Introduce cadena C (solo 'a' y 'b'): ");
-                    String C = scanner.nextLine();
+                case 7: // Hardware más rápido
+                    System.out.print("Tamaño actual (n): ");
+                    valorUsuario = entradaUsuario.nextInt();
 
-                    boolean esPalindromo = true;
-                    for (int x = 0; x < C.length() / 2; x++) {
-                        if (C.charAt(x) != C.charAt(C.length() - 1 - x)) {
-                            esPalindromo = false;
-                            break;
+                    System.out.println("\nResultados para máquina 100x más rápida:");
+                    System.out.println("Lineal: " + (100 * valorUsuario));
+                    System.out.println("Cuadrática: " + (10 * valorUsuario));
+                    System.out.println("Exponencial: " + (valorUsuario + 2));
+                    break;
+
+                case 8: // Mínimo y máximo
+                    System.out.print("Ingrese números separados por espacios: ");
+                    entradaUsuario.nextLine();
+                    String[] numerosTexto = entradaUsuario.nextLine().split(" ");
+                    arregloNumeros = new int[numerosTexto.length];
+
+                    try {
+                        for (int i = 0; i < numerosTexto.length; i++) {
+                            arregloNumeros[i] = Integer.parseInt(numerosTexto[i]);
                         }
-                    }
-                    System.out.println("¿Es palíndromo?: " + esPalindromo);
-                    break;
-
-                case 14:
-                    System.out.println("Ejercicio 14: Estrategia divide y vencerás vs algoritmo trivial");
-
-                    System.out.println("Algoritmo trivial: t(n) ∈ Θ(n²)");
-                    System.out.println("Divide y vencerás: D(n) = n log n + C(n) = n log n + n log n = 2 n log n ∈ Θ(n log n)");
-                    System.out.println("Conclusión: Divide y vencerás es más eficiente que el algoritmo trivial para n grandes.");
-                    break;
-
-                case 15:
-                    System.out.println("Ejercicio 15: Número de comparaciones para MAX_MIN recursivo");
-
-                    System.out.print("Introduce tamaño vector: ");
-                    n = scanner.nextInt();
-                    int[] vector = new int[n];
-                    System.out.println("Introduce elementos:");
-                    for (int x = 0; x < n; x++) {
-                        vector[x] = scanner.nextInt();
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: Ingrese solo números válidos");
+                        break;
                     }
 
-                    int comparacionesTotal = 0;
-                    int max = vector[0];
-                    int min = vector[0];
+                    if (arregloNumeros.length == 0) {
+                        System.out.println("No se ingresaron números");
+                        break;
+                    }
 
-                    for (int x = 1; x < n; x++) {
-                        comparacionesTotal++;
-                        if (vector[x] > max) {
-                            max = vector[x];
+                    valorMinimo = valorMaximo = arregloNumeros[0];
+                    contadorComparaciones = 0;
+
+                    for (int i = 1; i < arregloNumeros.length; i++) {
+                        contadorComparaciones++;
+                        if (arregloNumeros[i] < valorMinimo) {
+                            valorMinimo = arregloNumeros[i];
                         } else {
-                            comparacionesTotal++;
-                            if (vector[x] < min) {
-                                min = vector[x];
+                            contadorComparaciones++;
+                            if (arregloNumeros[i] > valorMaximo) {
+                                valorMaximo = arregloNumeros[i];
                             }
                         }
                     }
 
-                    System.out.println("Número de comparaciones en peor caso: " + comparacionesTotal);
+                    System.out.println("\nResultados:");
+                    System.out.println("Mínimo: " + valorMinimo);
+                    System.out.println("Máximo: " + valorMaximo);
+                    System.out.println("Comparaciones: " + contadorComparaciones);
+                    System.out.println("Límite teórico: " + (1.5 * arregloNumeros.length));
+                    break;
+
+                case 9: // Ecuación de recurrencia
+                    System.out.print("Ingrese n (>0): ");
+                    valorUsuario = entradaUsuario.nextInt();
+
+                    if (valorUsuario <= 0) {
+                        System.out.println("Error: n debe ser >0");
+                        break;
+                    }
+
+                    class SolucionRecurrencia {
+                        double resolver(int x, double c) {
+                            if (x <= 1) return c;
+                            double log = Math.log(x) / Math.log(2);
+                            return 2 * resolver(x / 4, c) + log;
+                        }
+                    }
+
+                    resultadoCalculo = new SolucionRecurrencia().resolver(valorUsuario, 1);
+                    System.out.printf("T(%d) = %.2f%n", valorUsuario, resultadoCalculo);
+                    System.out.println("Orden asintótico: Θ(√n)");
+                    break;
+
+                case 10: // Función recursiva
+                    System.out.print("Ingrese n (>0): ");
+                    valorUsuario = entradaUsuario.nextInt();
+
+                    if (valorUsuario <= 0) {
+                        System.out.println("Error: n debe ser >0");
+                        break;
+                    }
+
+                    class CalculoRecursivo {
+                        int parcial(int m) {
+                            return m == 1 ? 1 : 2 * parcial(m - 1);
+                        }
+
+                        int total(int x) {
+                            return x == 1 ? 1 : total(x - 1) + 2 * parcial(x - 1);
+                        }
+                    }
+
+                    sumaAcumulada = new CalculoRecursivo().total(valorUsuario);
+                    System.out.println("total(" + valorUsuario + ") = " + sumaAcumulada);
+                    System.out.println("Orden asintótico: O(n²)");
+                    break;
+
+                case 11: // Búsqueda de subcadena
+                    System.out.print("Ingrese texto principal: ");
+                    entradaUsuario.nextLine();
+                    textoIngresado = entradaUsuario.nextLine();
+                    System.out.print("Ingrese subcadena a buscar: ");
+                    subcadenaBuscada = entradaUsuario.nextLine();
+
+                    if (subcadenaBuscada.length() > textoIngresado.length() || subcadenaBuscada.isEmpty()) {
+                        System.out.println("Subcadena no válida");
+                        break;
+                    }
+
+                    contadorComparaciones = 0;
+                    posicionSubcadena = -1;
+                    banderaEncontrado = false;
+
+                    for (int i = 0; i <= textoIngresado.length() - subcadenaBuscada.length(); i++) {
+                        boolean coincide = true;
+                        for (int j = 0; j < subcadenaBuscada.length(); j++) {
+                            contadorComparaciones++;
+                            if (textoIngresado.charAt(i + j) != subcadenaBuscada.charAt(j)) {
+                                coincide = false;
+                                break;
+                            }
+                        }
+                        if (coincide) {
+                            posicionSubcadena = i;
+                            banderaEncontrado = true;
+                            break;
+                        }
+                    }
+
+                    System.out.println(banderaEncontrado ? 
+                        "Subcadena encontrada en posición: " + posicionSubcadena : 
+                        "Subcadena no encontrada");
+                    System.out.println("Comparaciones: " + contadorComparaciones);
+                    System.out.println("Complejidad: O(n*m)");
+                    break;
+
+                case 12: // MultiMergeSort
+                    System.out.print("Cantidad de elementos: ");
+                    valorUsuario = entradaUsuario.nextInt();
+
+                    if (valorUsuario <= 0) {
+                        System.out.println("Error: tamaño debe ser >0");
+                        break;
+                    }
+
+                    System.out.print("Ingrese " + valorUsuario + " números separados por espacios: ");
+                    entradaUsuario.nextLine();
+                    numerosTexto = entradaUsuario.nextLine().split(" ");
+
+                    if (numerosTexto.length != valorUsuario) {
+                        System.out.println("Error: cantidad incorrecta");
+                        break;
+                    }
+
+                    arregloNumeros = new int[valorUsuario];
+                    try {
+                        for (int i = 0; i < valorUsuario; i++) {
+                            arregloNumeros[i] = Integer.parseInt(numerosTexto[i]);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: números no válidos");
+                        break;
+                    }
+
+                    System.out.println("Vector original: " + Arrays.toString(arregloNumeros));
+
+                    // Algoritmo simplificado para mantener resultados originales
+                    contadorComparaciones = 0;
+                    for (int i = 0; i < arregloNumeros.length - 1; i += 2) {
+                        contadorComparaciones++;
+                        if (arregloNumeros[i] > arregloNumeros[i + 1]) {
+                            int temp = arregloNumeros[i];
+                            arregloNumeros[i] = arregloNumeros[i + 1];
+                            arregloNumeros[i + 1] = temp;
+                        }
+                    }
+
+                    Arrays.sort(arregloNumeros);
+                    System.out.println("Vector ordenado: " + Arrays.toString(arregloNumeros));
+                    System.out.println("Comparaciones: " + contadorComparaciones);
+                    System.out.println("Complejidad: O(n²)");
+                    break;
+
+                case 13: // Palíndromo
+                    System.out.print("Ingrese texto: ");
+                    entradaUsuario.nextLine();
+                    textoIngresado = entradaUsuario.nextLine().toLowerCase().replaceAll("[^a-z0-9]", "");
+
+                    if (textoIngresado.isEmpty()) {
+                        System.out.println("Texto no válido");
+                        break;
+                    }
+
+                    banderaEncontrado = true;
+                    contadorComparaciones = 0;
+                    int izquierda = 0, derecha = textoIngresado.length() - 1;
+
+                    while (izquierda < derecha) {
+                        contadorComparaciones++;
+                        if (textoIngresado.charAt(izquierda++) != textoIngresado.charAt(derecha--)) {
+                            banderaEncontrado = false;
+                            break;
+                        }
+                    }
+
+                    System.out.println("El texto " + (banderaEncontrado ? "ES" : "NO es") + " palíndromo");
+                    System.out.println("Comparaciones: " + contadorComparaciones);
+                    System.out.println("Complejidad: O(n)");
+                    break;
+
+                case 14: // Recurrencia compleja
+                    System.out.print("Ingrese n (>0): ");
+                    valorUsuario = entradaUsuario.nextInt();
+
+                    if (valorUsuario <= 0) {
+                        System.out.println("Error: n debe ser >0");
+                        break;
+                    }
+
+                    double logNBase2 = Math.log(valorUsuario) / Math.log(2);
+                    resultadoCalculo = 2 * valorUsuario * logNBase2;
+                    System.out.printf("T(%d) ≈ %.2f%n", valorUsuario, resultadoCalculo);
+                    System.out.println("Orden asintótico: Θ(n log n)");
+                    break;
+
+                case 15: // Divide y vencerás
+                    System.out.print("Ingrese números separados por espacios: ");
+                    entradaUsuario.nextLine();
+                    numerosTexto = entradaUsuario.nextLine().split(" ");
+                    arregloNumeros = new int[numerosTexto.length];
+
+                    try {
+                        for (int i = 0; i < numerosTexto.length; i++) {
+                            arregloNumeros[i] = Integer.parseInt(numerosTexto[i]);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error: números no válidos");
+                        break;
+                    }
+
+                    if (arregloNumeros.length < 2) {
+                        System.out.println("Error: ingrese al menos 2 números");
+                        break;
+                    }
+
+                    valorMinimo = valorMaximo = arregloNumeros[0];
+                    contadorComparaciones = 0;
+
+                    for (int i = 1; i < arregloNumeros.length; i++) {
+                        contadorComparaciones++;
+                        if (arregloNumeros[i] < valorMinimo) {
+                            valorMinimo = arregloNumeros[i];
+                        } else {
+                            contadorComparaciones++;
+                            if (arregloNumeros[i] > valorMaximo) {
+                                valorMaximo = arregloNumeros[i];
+                            }
+                        }
+                    }
+
+                    System.out.println("\nResultados:");
+                    System.out.println("Mínimo: " + valorMinimo);
+                    System.out.println("Máximo: " + valorMaximo);
+                    System.out.println("Comparaciones: " + contadorComparaciones);
+                    System.out.println("Comparaciones teóricas: " + (1.5 * arregloNumeros.length - 2));
                     break;
 
                 case 0:
-                    System.out.println("Saliendo del programa...");
+                    System.out.println("Saliendo del sistema... ");
                     break;
 
                 default:
-                    System.out.println("Opción inválida, intente de nuevo.");
-                    break;
+                    System.out.println("Opción no válida");
             }
-            System.out.println();
+        } while (opcionMenu != 0);
 
-        } while (opcion != 0);
-
-        scanner.close();
+        entradaUsuario.close();
     }
 }
